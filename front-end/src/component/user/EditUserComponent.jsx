@@ -20,20 +20,20 @@ class EditUserComponent extends Component {
   }
 
   componentDidMount() {
-    this.reloadUserList();
+    this.loadUser();
   }
 
   loadUser = () => {
-    ApiService.fetchUserByID(window.localStorage.getItem("userID"))
+    ApiService.fetchUsersByID(window.localStorage.getItem("userID"))
       .then((res) => {
         let user = res.data;
         this.setState({
-          id: this.state.id,
-          username: this.state.username,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          age: this.state.age,
-          salary: this.state.salary,
+          id: user.id,
+          username: user.username,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          age: user.age,
+          salary: user.salary,
         });
       })
       .catch((err) => {
@@ -50,7 +50,7 @@ class EditUserComponent extends Component {
   saveUser = (e) => {
     e.preventDefault();
     let user = {
-      username: this.state.username,
+      id: this.state.id,
       password: this.state.password,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
